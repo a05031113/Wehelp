@@ -15,8 +15,16 @@
                 <div class="item">item 3</div>
                 <div class="item">item 4</div>
             </div>
-            <div class="mobile-items">
+            <div class="mobile-items" id="btn">
                 <img src="icon.png" width="30px" height="30px"/>
+            </div>
+            <div class="h" id="h">
+                <div class="hide-items" id="hiding">
+                    <div class="h-item">item 1</div>
+                    <div class="h-item">item 2</div>
+                    <div class="h-item">item 3</div>
+                    <div class="h-item">item 4</div>
+                </div>
             </div>
         </div>
         <div class="wel">
@@ -93,5 +101,18 @@
             </div>
         </div>
         </div>
+        <script>
+            var model=document.getElementById('h');
+            var btn=document.getElementById('btn');
+
+            btn.onclick=function() {
+                model.style.display="block";
+            }
+            window.onclick=function(){
+                if (event.target==model){
+                    model.style.display="none";
+                }
+            }
+        </script>
     </body>
 </html>
