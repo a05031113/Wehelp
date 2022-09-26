@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函式與流程控制</title>
+</head>
+<body>
+    <script>
+        // 函式與流程控制
+        function calculate(min, max, step){
+            let sum = 0;
+            while (min<=max){
+                sum += min;
+                min+=step;
+            }
+            console.log(sum);
+        }
+        calculate(1,3,1);
+        calculate(4,8,2);
+        calculate(-1,2,2);
+
+        console.log("-------------------")
+
+        // 物件與陣列
+        function avg(data){
+            let sum=0;
+            let count=0;
+            employees = data["employees"]
+            let l = employees.length;
+            for (i=0;i<l;i++){
+                if (employees[i]["manager"]==false){
+                    sum+=employees[i]["salary"];
+                    count+=1;
+                }
+            }
+            let mean = sum/count;
+            console.log(mean);
+        }
+        avg({
+            "employees":[
+                {
+                    "name":"John",
+                    "salary":30000,
+                    "manager":false
+                },
+                {
+                    "name":"Bob",
+                    "salary":60000,
+                    "manager":true
+                },
+                {
+                    "name":"Jenny",
+                    "salary":50000,
+                    "manager":false
+                },
+                {
+                    "name":"Tony",
+                    "salary":40000,
+                    "manager":false
+                }
+            ]
+        })
+
+        console.log("-------------------")
+
+        // 要求三
+        function func(a){
+            function mul(n1, n2){
+                console.log(a+(n1*n2));
+            }
+            return mul;
+        }
+        func(2)(3, 4); // 你補完的函式能印出 2+(3*4) 的結果 14
+        func(5)(1, -5); // 你補完的函式能印出 5+(1*-5) 的結果 0
+        func(-3)(2, 9); // 你補完的函式能印出 -3+(2*9) 的結果 15
+
+        console.log("-------------------")
+
+        // 要求四
+        function maxProduct(nums){
+            // set a null list
+            var m = [];
+            // for loop to calculate every number
+            for (i=0; i<nums.length-1;i++){
+                for (j=i+1; j<nums.length; j++){
+                    m.push(nums[i]*nums[j]);
+                }
+            }
+            // pick largest number
+            let max = m[0];
+            for (i=1; i<m.length; i++){
+                if (m[i]>max){
+                    max = m[i];
+                }
+            }
+            console.log(max);
+        }
+        maxProduct([5, 20, 2, 6]); // 得到 120
+        maxProduct([10, -20, 0, 3]); // 得到 30
+        maxProduct([10, -20, 0, -3]); // 得到 60
+        maxProduct([-1, 2]); // 得到 -2
+        maxProduct([-1, 0, 2]); // 得到 0 或 -0
+        maxProduct([5, -1, -2, 0]); // 得到 2
+        maxProduct([-5, -2]); // 得到 10
+
+        console.log("-------------------")
+
+        // 要求五
+        function twoSum(nums, target){
+            for (i=0; i<nums.length;i++){
+                dif = target-nums[i];
+                for (j=i+1; j<nums.length; j++){
+                    if (nums[j]==dif){
+                        return [i, j];
+                    }
+                }
+            }
+        }
+        let result=twoSum([2, 11, 7, 15], 9);
+        console.log(result); // show [0, 2] because nums[0]+nums[2] is 9
+
+        console.log("-------------------");
+
+        // 要求六
+        function maxZeros(nums){
+            // set series and count
+            let series = 0;
+            let count = 0;
+            // count 0
+            for (i=0; i<nums.length;i++){
+                if (nums[i]==0){
+                    count += 1
+                    // replace series number
+                    if (count>series){
+                        series = count
+                    }
+                }else{
+                    count = 0
+                }
+            }
+            console.log(series)
+        }
+        maxZeros([0, 1, 0, 0]); // 得到 2
+        maxZeros([1, 0, 0, 0, 0, 1, 0, 1, 0, 0]); // 得到 4
+        maxZeros([1, 1, 1, 1, 1]); // 得到 0
+        maxZeros([0, 0, 0, 1, 1]) // 得到 3
+
+    </script>
+</body>
+</html>
