@@ -66,18 +66,16 @@ print("------------------------------")
 
 # 要求四
 def maxProduct(nums):
-    # set a null list
-    m = []
+    # set first number to compared
+    m = nums[0]*nums[1]
     # for loop to calculate every answer
     for i in range(len(nums)-1):
-        for j in range(len(nums[i+1:])):
-            m.append(nums[i]*nums[i+1:][j])
-    # pick largest numbers
-    max = m[0]
-    for i in m:
-        if i > max:
-            max = i
-    print(max)
+        for j in nums[i+1:]:
+            # comparaed with m. if larget, replace it 
+            result = nums[i]*j
+            if result > m:
+                m = result
+    print(m)
 
 maxProduct([5, 20, 2, 6]) # 得到 120
 maxProduct([10, -20, 0, 3]) # 得到 30
