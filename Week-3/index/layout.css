@@ -107,7 +107,7 @@ body{
     padding-bottom: 5px;
 }
 .pic{
-    max-width: 100%;
+    width: 100%;
     height: 215px;
     object-fit: cover;
 }
@@ -158,6 +158,10 @@ body{
     }
     .image-title{
         width: 45%;
+    }
+    .pic{
+        height: auto;
+        aspect-ratio: 290/215;
     }
 }
 @media (max-width:600px){
