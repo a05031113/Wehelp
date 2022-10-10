@@ -6,6 +6,7 @@ from flask import render_template
 from flask import session
 
 app = Flask(__name__)
+app.secret_key="secret"
 
 # index page
 @app.route("/", methods=["GET", "POST"])
@@ -62,12 +63,18 @@ def error():
     messange = request.args.get("messange")
     return render_template("error.html", messange=messange)
 
+# transfer to /square/number from ?number
+@app.route("/trans")
+def trans():
+    number=request.args.get("number")
+    return redirect("/square/"+number)
+
 # calculate square of number
-@app.route("/square")
-def square():
-    num = int(request.args.get("number"))
-    square=num**2
-    return render_template("square.html", square=square)
+@app.route("/square/<number>")
+def square(number):
+    num = int(number)
+    nStr = str(num*num)
+    return render_template("square.html", num=nStr)
 
 if __name__=="__main__":
     app.secret_key="secret"
