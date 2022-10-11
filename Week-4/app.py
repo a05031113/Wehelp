@@ -48,7 +48,7 @@ def signout():
 
 # member page
 @app.route("/member", methods=["GET", "POST"])
-def member():
+def member(): 
     # if already login
     if session.get("userID"):
         return render_template("member.html")
@@ -62,12 +62,6 @@ def error():
     # show error messange
     messange = request.args.get("messange")
     return render_template("error.html", messange=messange)
-
-# transfer to /square/number from ?number
-@app.route("/trans")
-def trans():
-    number=request.args.get("number")
-    return redirect("/square/"+number)
 
 # calculate square of number
 @app.route("/square/<number>")

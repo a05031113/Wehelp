@@ -28,16 +28,20 @@
         </div>
     </form>
     <div class="content">計算正整數的平方</div>
-    <form action="/trans">
-        <div class="loginForm">
-            <div class="username">正整數</div>
-            <div class="input">
-                <input class="inputDetail" name="number" placeholder="number" type="text"/> 
-            </div>
+    <div class="loginForm">
+        <div class="username">正整數</div>
+        <div class="input">
+            <input class="inputNumber" id="number" name="number" placeholder="number" type="text"/> 
         </div>
-        <div class="loginBtn">
-            <button class="button" type="submit">計算</button>
-        </div>
-    </form>
+    </div>
+    <div class="loginBtn">
+        <button class="button" id="btn" type="submit">計算</button>
+    </div>
+    <script>
+        document.getElementById("btn").addEventListener("click", function(){
+            number = document.getElementById("number").value;
+            document.location.href = "/square/"+number
+        })
+    </script>
 </body>
 </html>
