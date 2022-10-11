@@ -38,6 +38,7 @@
         <button class="button" id="btn" type="submit">計算</button>
     </div>
     <script>
+        // click button to return number to "/square/<number>"
         document.getElementById("btn").addEventListener("click", function(){
             number = document.getElementById("number").value;
             document.location.href = "/square/"+number
