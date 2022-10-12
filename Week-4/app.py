@@ -70,8 +70,6 @@ def square(number):
     nStr = str(num*num)
     return render_template("square.html", num=nStr)
 
-print("haha")
-
 if __name__=="__main__":
     app.secret_key="secret"
     app.run(port=3000, debug=True)
