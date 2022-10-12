@@ -1,9 +1,5 @@
 # import tools I need
-from flask import Flask
-from flask import request
-from flask import redirect
-from flask import render_template
-from flask import session
+from flask import Flask, request, redirect, render_template, session, url_for
 
 app = Flask(__name__)
 app.secret_key="secret"
@@ -54,7 +50,7 @@ def member():
         return render_template("member.html")
     # if not login yet, need to login first
     else:
-        return redirect("/")
+        return redirect(url_for("index"))
 
 # if something wrong
 @app.route("/error")
