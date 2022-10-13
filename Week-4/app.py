@@ -1,5 +1,5 @@
 # import tools I need
-from flask import Flask, request, redirect, render_template, session, url_for
+from flask import Flask, request, redirect, render_template, session, url_for, make_response, Response
 
 app = Flask(__name__)
 app.secret_key="secret"
@@ -8,7 +8,9 @@ app.secret_key="secret"
 @app.route("/", methods=["GET", "POST"])
 def index(): 
     # if already login, return to /member
-    if session.get("userID"):
+    # session way: 
+    # if session.get("userID")
+    if request.cookies.get("username"):
         return redirect("/member")
     # if not login, go to index 
     else:
@@ -27,9 +29,14 @@ def signin():
             return redirect("/error?messange=請輸入帳號、密碼")
         # if username and password is test
         elif username=="test" and password=="test":
-            session["userID"]=username
-            session["userPass"]=password
-            return redirect("/member")
+            # session["userID"]=username
+            resp = make_response(redirect("/member"))
+            resp.set_cookie("username", username)
+            return resp
+            # by session way
+            # session["userID"]=username
+            # session["userPass"]=password
+            # return redirect("/member")
         # if one of it is wrong
         else:
             return redirect("/error?messange=帳號或密碼輸入錯誤")
@@ -39,14 +46,19 @@ def signin():
 # signout and clean session and return to index
 @app.route("/signout")
 def signout():
-    session.clear()
-    return redirect("/")
+    # session.clear() # session clear
+    res = make_response(redirect("/"))
+    res.delete_cookie("username")
+    return res
+    # session way
+    # session.clear()
+    # return redirect("/")
 
 # member page
 @app.route("/member", methods=["GET", "POST"])
 def member(): 
     # if already login
-    if session.get("userID"):
+    if request.cookies.get("username"):
         return render_template("member.html")
     # if not login yet, need to login first
     else:
