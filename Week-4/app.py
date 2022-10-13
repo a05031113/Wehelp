@@ -1,8 +1,11 @@
 # import tools I need
 from flask import Flask, request, redirect, render_template, session, url_for, make_response, Response
+from cryptography.fernet import Fernet
 
 app = Flask(__name__)
 app.secret_key="secret"
+key = Fernet.generate_key()
+f = Fernet(key)
 
 # index page
 @app.route("/", methods=["GET", "POST"])
@@ -29,10 +32,13 @@ def signin():
             return redirect("/error?messange=請輸入帳號、密碼")
         # if username and password is test
         elif username=="test" and password=="test":
-            # session["userID"]=username
+            # write into cookies
+            byteUsername = str.encode(username)
+            cipher = f.encrypt(byteUsername)
             resp = make_response(redirect("/member"))
-            resp.set_cookie("username", username)
+            resp.set_cookie("username", cipher)
             return resp
+            # session["userID"]=username
             # by session way
             # session["userID"]=username
             # session["userPass"]=password
