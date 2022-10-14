@@ -38,7 +38,6 @@ def signin():
             resp = make_response(redirect("/member"))
             resp.set_cookie("username", cipher)
             return resp
-            # session["userID"]=username
             # by session way
             # session["userID"]=username
             # session["userPass"]=password
