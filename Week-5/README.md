@@ -1,7 +1,7 @@
 要求三：
 使用 INSERT 指令新增一筆資料到 member 資料表中，這筆資料的 username 和 password 欄位必須是 test。接著繼續新增至少 4 筆隨意的資料。
 使用 SELECT 指令取得所有在 member 資料表中的會員資料。
-
+https://github.com/a05031113/Wehelp/blob/main/Week-5/image/req3_select_all.png?raw=true
 
 使用 SELECT 指令取得所有在 member 資料表中的會員資料，並按照 time 欄位，由近到遠排序。
 使用 SELECT 指令取得 member 資料表中第 2 ~ 4 共三筆資料，並按照 time 欄位，由近到遠排序。( 並非編號 2、3、4 的資料，而是排序後的第 2 ~ 4 筆資料 )
