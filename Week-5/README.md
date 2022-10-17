@@ -1,5 +1,7 @@
 要求三：
+
 使用 INSERT 指令新增一筆資料到 member 資料表中，這筆資料的 username 和 password 欄位必須是 test。接著繼續新增至少 4 筆隨意的資料。
+
 使用 SELECT 指令取得所有在 member 資料表中的會員資料。
 
 ![image](https://github.com/a05031113/Wehelp/blob/main/Week-5/image/req3_select_all.png?raw=true)
@@ -25,6 +27,7 @@
 ![image](https://github.com/a05031113/Wehelp/blob/main/Week-5/image/req3_update_name=test2_by_username=test.png?raw=true)
 
 要求四：
+
 取得 member 資料表中，總共有幾筆資料 ( 幾位會員 )。
 
 ![image](https://github.com/a05031113/Wehelp/blob/main/Week-5/image/req4_total_member_count.png?raw=true)
@@ -38,6 +41,7 @@
 ![image](https://github.com/a05031113/Wehelp/blob/main/Week-5/image/req4_avg_of_follower_count.png?raw=true)
 
 要求五：
+
 使用 SELECT 搭配 JOIN 語法，取得所有留言，結果須包含留言者會員的姓名。
 
 ![image](https://github.com/a05031113/Wehelp/blob/main/Week-5/image/req5_all_the_message&name.png?raw=true)
