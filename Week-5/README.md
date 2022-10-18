@@ -53,3 +53,10 @@
 使用 SELECT、SQL Aggregate Functions 搭配 JOIN 語法，取得 member 資料表中欄位 username 是 test 的所有留言平均按讚數。
 
 ![image](https://github.com/a05031113/Wehelp/blob/main/Week-5/image/req5_avg_of_like_count.png?raw=true)
+
+Extra requirement:
+可以根據留言編號取得該留言有哪些會員按讚。
+
+
+會員若是嘗試對留言按讚：要能先檢查是否曾經按過讚，然後才將按讚的數量 +1 並且記錄按讚的會員是誰。
+
