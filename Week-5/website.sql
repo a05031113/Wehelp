@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `likes_name`
+--
+
+DROP TABLE IF EXISTS `likes_name`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `likes_name` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `content_id` bigint NOT NULL,
+  `like_username` varchar(255) NOT NULL,
+  `time` datetime NOT NULL DEFAULT '2022-10-17 15:00:00',
+  PRIMARY KEY (`id`),
+  KEY `name_index` (`like_username`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `likes_name`
+--
+
+LOCK TABLES `likes_name` WRITE;
+/*!40000 ALTER TABLE `likes_name` DISABLE KEYS */;
+INSERT INTO `likes_name` VALUES (1,1,'Jerry','2022-10-18 12:00:00'),(2,1,'Harry','2022-10-18 12:00:00'),(3,1,'Amy','2022-10-18 11:00:00'),(4,1,'Ann','2022-10-18 11:00:00'),(5,1,'Ouch','2022-10-18 11:20:00'),(6,1,'Camary','2022-10-18 11:20:00'),(7,1,'Elon','2022-10-18 11:50:00'),(8,1,'Musk','2022-10-18 11:50:00'),(9,1,'Ben','2022-10-18 11:50:00'),(10,1,'Porter','2022-10-18 11:50:00');
+/*!40000 ALTER TABLE `likes_name` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `member`
 --
 
@@ -81,4 +108,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-17 15:26:04
+-- Dump completed on 2022-10-18 20:03:29
