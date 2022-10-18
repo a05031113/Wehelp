@@ -57,6 +57,12 @@
 Extra requirement:
 可以根據留言編號取得該留言有哪些會員按讚。
 
+![image](https://github.com/a05031113/Wehelp/blob/main/Week-5/image/Extra_who_likes.png?raw=true)
 
 會員若是嘗試對留言按讚：要能先檢查是否曾經按過讚，然後才將按讚的數量 +1 並且記錄按讚的會員是誰。
+
+Check certain person like or not. If not, we can insert information into database.
+
+![image](https://github.com/a05031113/Wehelp/blob/main/Week-5/image/Extra_check_if_like_or_not.png?raw=true)
+
 
