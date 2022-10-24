@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/layout.css" />
+    <title>Member</title>
+</head>
+<body>
+    <div class="welcome">歡迎光臨，這是會員頁</div>
+    <div class="content">{{ name }}，歡迎登入系統</div>
+    <div class="back">
+        <form action="/signout">
+            <button class="backIndex" type="submit" href="" name="logout">登出系統</button>
+        </form>
+    </div>
+    <div class="contentTitle">快來留言吧</div>
+    <form action="/message" method="post">
+        <div class="loginForm">
+            <div class="username">內容</div>
+            <div class="input">
+                <input class="inputDetail" name="message" placeholder="message" type="text"/> 
+            </div>
+        </div>
+        <div class="loginBtn" method="post">
+            <button class="button" type="submit">送出</button>
+        </div>
+    </form>
+    <br>
+    {% for row in rows %}
+    <div class="box">
+        <div class="user">{{ row[0] }} </div>
+        <div class="message">&nbsp;: {{ row[1] }}</div>
+    </div>
+    {% endfor %}
+</body>
+</html>
