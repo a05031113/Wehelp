@@ -14,13 +14,5 @@ cursor.execute("""
             INNER JOIN message ON member.id=message.member_id 
             ORDER BY message.time DESC
             """)
-rows = []
-def test():
-    for row in cursor:
-        rows.append([row[0], row[2]])
-        if row[1] == "test2":
-            user = row[0]
-    return user
-
-print(test())
-print(rows)
+for i in cursor:
+    print(i)
