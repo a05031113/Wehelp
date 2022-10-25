@@ -6,11 +6,12 @@ from flask import render_template
 from flask import session
 import mysql.connector as connector
 from werkzeug.security import check_password_hash, generate_password_hash
+from mySQL import p
 
 db = connector.connect(
     host = "127.0.0.1",
     user = "root",
-    password = "",
+    password = p(),
     database = "website"
 )
 cursor = db.cursor()
