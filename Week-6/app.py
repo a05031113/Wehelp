@@ -11,7 +11,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 db = connector.connect(
     host = "127.0.0.1",
     user = "root",
-    password = "Password",
+    password = "",
     database = "website"
 )
 cursor = db.cursor()
@@ -44,22 +44,26 @@ def signup():
         elif not password == confirmation:
             return redirect("/error?message=密碼不一致")
         # collect data form member
-        cursor.execute("SELECT username FROM member")
-        # check username is already register or not
-        for member in cursor:
-            if username == member[0]:
-                return redirect("error?message=帳號已經被註冊")
-        # insert data into database
-        now = datetime.now()
-        date_now = now.strftime("%y-%m-%d %H:%M:%S")
-        insert = "INSERT INTO member (name, username, password, time) VALUES (%s, %s, %s, %s)"
-        insertVal = (name, username, generate_password_hash(password), date_now)
-        cursor.execute(insert, insertVal)
-        db.commit()
-        # save username into session
-        session["userID"]=username
-        # return to /member
-        return redirect("/member")
+        checkUser = "SELECT username FROM member WHERE username =%s"
+        User = (username,)
+        cursor.execute(checkUser, User)
+        checklist = []
+        for row in cursor:
+            checklist.append(row)
+        if len(checklist) == 1:
+            return redirect("error?message=帳號已經被註冊")
+        else:
+            # insert data into database
+            now = datetime.now()
+            date_now = now.strftime("%y-%m-%d %H:%M:%S")
+            insert = "INSERT INTO member (name, username, password, time) VALUES (%s, %s, %s, %s)"
+            insertVal = (name, username, generate_password_hash(password), date_now)
+            cursor.execute(insert, insertVal)
+            db.commit()
+            # save username into session
+            session["userID"]=username
+            # return to /member
+            return redirect("/member")
     else:
         return render_template("index.html")
 

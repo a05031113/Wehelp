@@ -9,10 +9,12 @@ db = connector.connect(
 
 cursor = db.cursor()
 
-cursor.execute("""
-            SELECT name, username, content FROM member 
-            INNER JOIN message ON member.id=message.member_id 
-            ORDER BY message.time DESC
-            """)
+check = "SELECT username FROM member WHERE username = %s"
+val = ("a",)
+cursor.execute(check, val)
+l = []
 for i in cursor:
-    print(i)
+    l.append(i)
+
+print(len(l))
+
