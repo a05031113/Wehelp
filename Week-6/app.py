@@ -5,10 +5,13 @@ from flask import redirect
 from flask import render_template
 from flask import session
 import mysql.connector as connector
+from mysql.connector.pooling import MySQLConnectionPool
 from werkzeug.security import check_password_hash, generate_password_hash
 from mySQL import p
 
 db = connector.connect(
+    pool_name = "mypool",
+    pool_size = 5,
     host = "127.0.0.1",
     user = "root",
     password = p(),
@@ -106,13 +109,13 @@ def member():
             name = name[0]
         # show message
         cursor.execute("""
-            SELECT name, username, content FROM member 
+            SELECT name, content FROM member 
             INNER JOIN message ON member.id=message.member_id 
             ORDER BY message.time DESC
             """)
         rows = []
         for row in cursor:
-            rows.append([row[0], row[2]])
+            rows.append([row[0], row[1]])
         return render_template("member.html", name=name, rows=rows)
     # if not login yet, need to login first
     else:

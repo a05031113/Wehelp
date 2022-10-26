@@ -1,20 +1,13 @@
+# from mysql.connector.pooling import MySQLConnectionPool
 import mysql.connector as connector
+from mySQL import p
 
 db = connector.connect(
     host = "127.0.0.1",
     user = "root",
-    password = "Password",
+    password = p(),
     database = "website"
 )
 
-cursor = db.cursor()
 
-check = "SELECT username FROM member WHERE username = %s"
-val = ("a",)
-cursor.execute(check, val)
-l = []
-for i in cursor:
-    l.append(i)
-
-print(len(l))
 
