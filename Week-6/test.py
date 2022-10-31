@@ -9,5 +9,13 @@ db = connector.connect(
     database = "website"
 )
 
+cursor = db.cursor()
 
+checkUser = "SELECT username FROM member WHERE username =%s"
+User = ("aaaaaa",)
+cursor.execute(checkUser, User)
+f = cursor.fetchone()
+
+if f:
+    print("true")
 

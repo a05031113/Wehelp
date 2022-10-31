@@ -32,6 +32,7 @@ def index():
     else:
         return render_template("index.html")
 
+# signup page
 @app.route("/signup", methods=["POST"])
 def signup():
     name = request.form.get("name")
@@ -49,10 +50,8 @@ def signup():
     checkUser = "SELECT username FROM member WHERE username =%s"
     User = (username,)
     cursor.execute(checkUser, User)
-    checklist = []
-    for row in cursor:
-        checklist.append(row)
-    if len(checklist) == 1:
+    isPassword = cursor.fetchone()
+    if isPassword:
         return redirect("error?message=帳號已經被註冊")
     else:
         # insert data into database
