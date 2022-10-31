@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/layout.css" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="welcome">歡迎光臨，請輸入帳號密碼</div>
+    <div class="content">註冊帳號</div>
+    <form action="/signup" method="post">
+        <div class="loginForm">
+            <div class="username">姓名</div>
+            <div class="input">
+                <input class="inputDetail" name="name" placeholder="name" type="text"/> 
+            </div>
+        </div>
+        <div class="loginForm">
+            <div class="username">帳號</div>
+            <div class="input">
+                <input class="inputDetail" name="username" placeholder="username" type="text"/> 
+            </div>
+        </div>
+        <div class="loginForm">
+            <div class="password">密碼</div>
+            <div class="input">
+                <input class="inputDetail" name="password" placeholder="password" type="password"/>
+            </div>
+        </div>
+        <div class="loginForm">
+            <div class="password">確認</div>
+            <div class="input">
+                <input class="inputDetail" name="confirmation" placeholder="password again" type="password"/>
+            </div>
+        </div>
+        <div class="loginBtn" method="post">
+            <button class="button" type="submit">註冊</button>
+        </div>
+    </form>
+    <div class="content">登入系統</div>
+    <form action="/signin" method="post">
+        <div class="loginForm">
+            <div class="username">帳號</div>
+            <div class="input">
+                <input class="inputDetail" name="username" placeholder="username" type="text"/> 
+            </div>
+        </div>
+        <div class="loginForm">
+            <div class="password">密碼</div>
+            <div class="input">
+                <input class="inputDetail" name="password" placeholder="password" type="password"/>
+            </div>
+        </div>
+        <div class="loginBtn" method="post">
+            <button class="button" type="submit">登入</button>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/layout.css" />
+    <title>Member</title>
+</head>
+<body>
+    <div class="welcome">歡迎光臨，這是會員頁</div>
+    <div class="content">{{ name }}，歡迎登入系統</div>
+    <div class="back">
+        <form action="/signout">
+            <button class="backIndex" type="submit" href="" name="logout">登出系統</button>
+        </form>
+    </div>
+    <div class="contentTitle">快來留言吧</div>
+    <form action="/message" method="post">
+        <div class="loginForm">
+            <div class="username">內容</div>
+            <div class="input">
+                <input class="inputDetail" name="message" placeholder="message" type="text"/> 
+            </div>
+        </div>
+        <div class="loginBtn" method="post">
+            <button class="button" type="submit">送出</button>
+        </div>
+    </form>
+    <br>
+    {% for row in rows %}
+    <div class="box">
+        <div class="user">{{ row[0] }} </div>
+        <div class="message">&nbsp;: {{ row[1] }}</div>
+    </div>
+    {% endfor %}
+    <div class="contentTitle">查詢會員姓名</div>
+    <div class="search">
+        <div class="input">
+            <input class="inputDetail" id="search_username" placeholder="username" type="text"/> 
+        </div>
+        <div class="loginBtn" method="post">
+            <button class="button" type="submit" onclick="search()">查詢</button>
+        </div>
+    </div>
+    <div class="search_result"></div>
+    <div class="contentTitle">更新我的姓名</div>
+    <div class="rename">
+        <div class="input">
+            <input class="inputDetail" id="rename" placeholder="輸入新的姓名" type="text"/> 
+        </div>
+        <div class="loginBtn" method="post">
+            <button class="button" type="submit" onclick="rename()">更新</button>
+        </div>
+    </div>
+    <div class="rename_result"></div>
+    <script>
+        function search(){
+            // get API's url
+            let search_value = document.getElementById("search_username").value;
+            url = "http://127.0.0.1:3000/api/member?username="+search_value;
+            // where to insert into HTML
+            let searchDiv = document.querySelector(".search_result");
+            // clean 
+            searchDiv.innerHTML = " ";
+            // fetch the json
+            fetch(url).then(function(response){
+                return response.json();
+            }).then(function(lis){
+                let data = lis['data'];
+                // appendChild into HTML
+                if (data === null){
+                    const result = document.createElement("div");
+                    const content = document.createTextNode("查無此人");
+                    result.appendChild(content);
+                    searchDiv.appendChild(result)
+                }else{
+                    const result = document.createElement("div");
+                    const content = document.createTextNode(data["name"]+"("+data["username"]+")");
+                    result.appendChild(content);
+                    searchDiv.appendChild(result)
+                }
+            })
+        }
+        function rename(){
+            // send json to backend
+            let url = "http://127.0.0.1:3000/api/member"
+            let rename = document.getElementById("rename").value;
+            const data = {
+                "name": rename
+            };
+            fetch(url, {
+                method: "PATCH",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            // show "更新完成"
+            let renameDiv = document.querySelector(".rename_result");
+            renameDiv.innerHTML = " ";
+            const result = document.createElement("div");
+            const content = document.createTextNode("更新成功");
+            result.appendChild(content);
+            renameDiv.appendChild(result);
+        }
+    </script>
+</body>
+</html>
