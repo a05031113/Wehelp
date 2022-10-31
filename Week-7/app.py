@@ -75,7 +75,7 @@ def signup():
             # return to /member
             return redirect("/member")
     except:
-        print("error")
+        print("something wrong")
     finally:
         cursor.close()
         db.close()
@@ -103,7 +103,7 @@ def signin():
             # if wrong return to error
             return redirect("/error?message=帳號或密碼輸入錯誤")
     except:
-        print("some error")
+        print("something wrong")
     finally:
         cursor.close()
         db.close()
@@ -143,7 +143,7 @@ def member():
         else:
             return redirect("/")
     except:
-        print("some error")
+        print("something wrong")
     finally:
         cursor.close()
         db.close()
@@ -192,7 +192,7 @@ def api():
         else:
             return redirect("/")
     except:
-        print("some error")
+        print("something wrong")
     finally:
         cursor.close()
         db.close()
@@ -215,7 +215,7 @@ def message():
         else:
             return redirect("/")
     except:
-        print("some error")
+        print("something wrong")
     finally:
         cursor.close()
         db.close()

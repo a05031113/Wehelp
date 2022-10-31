@@ -95,6 +95,8 @@
                 headers: {
                     "Content-type": "application/json"
                 }
+            }).catch(function(error){
+                console.log("something wrong")
             })
             // show "更新完成"
             let renameDiv = document.querySelector(".rename_result");
