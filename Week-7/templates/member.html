@@ -37,13 +37,13 @@
     <div class="contentTitle">查詢會員姓名</div>
     <div class="search">
         <div class="input">
-            <input class="inputDetail" id="search_username" placeholder="username" type="text"/> 
+            <input class="inputDetail" id="searchUsername" placeholder="username" type="text"/> 
         </div>
         <div class="loginBtn" method="post">
             <button class="button" type="submit" onclick="search()">查詢</button>
         </div>
     </div>
-    <div class="search_result"></div>
+    <div class="searchResult"></div>
     <div class="contentTitle">更新我的姓名</div>
     <div class="rename">
         <div class="input">
@@ -53,14 +53,14 @@
             <button class="button" type="submit" onclick="rename()">更新</button>
         </div>
     </div>
-    <div class="rename_result"></div>
+    <div class="renameResult"></div>
     <script>
         function search(){
             // get API's url
-            let search_value = document.getElementById("search_username").value;
+            let searchValue = document.getElementById("searchUsername").value;
             url = "http://127.0.0.1:3000/api/member?username="+search_value;
             // where to insert into HTML
-            let searchDiv = document.querySelector(".search_result");
+            let searchDiv = document.querySelector(".searchResult");
             // clean 
             searchDiv.innerHTML = " ";
             // fetch the json
@@ -99,7 +99,7 @@
                 console.log("something wrong")
             })
             // show "更新完成"
-            let renameDiv = document.querySelector(".rename_result");
+            let renameDiv = document.querySelector(".renameResult");
             renameDiv.innerHTML = " ";
             const result = document.createElement("div");
             const content = document.createTextNode("更新成功");

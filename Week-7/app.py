@@ -6,7 +6,6 @@ from flask import render_template
 from flask import session
 from flask import jsonify
 import mysql.connector as connector
-from mysql.connector.pooling import MySQLConnectionPool
 from werkzeug.security import check_password_hash, generate_password_hash
 from mySQL import p
 
@@ -52,24 +51,22 @@ def signup():
     try:
         db = connection()
         cursor = db.cursor()
-        checkUser = "SELECT username FROM member WHERE username =%s"
-        User = (username,)
-        cursor.execute(checkUser, User)
-        isPassword = cursor.fetchone()
-        if isPassword:
-            cursor.close()
-            db.close()
+        check_user = "SELECT username FROM member WHERE username =%s"
+        user = (username,)
+        cursor.execute(check_user, user)
+        is_password = cursor.fetchone()
+        if is_password:
             return redirect("error?message=帳號已經被註冊")        
         else:
             # insert data into database
             insert = "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)"
-            insertVal = (name, username, generate_password_hash(password))
-            cursor.execute(insert, insertVal)
+            insert_val = (name, username, generate_password_hash(password))
+            cursor.execute(insert, insert_val)
             db.commit()
             # save username into session
             select = "SELECT id, username FROM member WHERE username=%s"
-            selectVal = (username,)
-            cursor.execute(select, selectVal)
+            select_val = (username,)
+            cursor.execute(select, select_val)
             for row in cursor:
                 session["userID"] = row[0]
             # return to /member
@@ -79,6 +76,7 @@ def signup():
     finally:
         cursor.close()
         db.close()
+
 # check signin data
 @app.route("/signin", methods=["POST"])
 def signin():
@@ -94,8 +92,8 @@ def signin():
             cursor = db.cursor()
             # check username and password
             check = "SELECT password, id FROM member WHERE username = %s"
-            checkVal = (username,)
-            cursor.execute(check, checkVal)
+            check_val = (username,)
+            cursor.execute(check, check_val)
             for member in cursor:
                 if check_password_hash(member[0], password):
                     session["userID"]=member[1]
@@ -107,7 +105,6 @@ def signin():
     finally:
         cursor.close()
         db.close()
-
 
 # signout and clean session and return to index
 @app.route("/signout")
@@ -124,9 +121,9 @@ def member():
             db = connection()
             cursor = db.cursor()
             # show name on /member
-            checkName = "SELECT name FROM member WHERE id=%s"
-            checkVal = (session["userID"],)
-            cursor.execute(checkName, checkVal)
+            check_name = "SELECT name FROM member WHERE id=%s"
+            check_val = (session["userID"],)
+            cursor.execute(check_name, check_val)
             for name in cursor:
                 name = name[0]
             # show message
@@ -208,8 +205,8 @@ def message():
             message = request.form.get("message")
             # insert information into table of message
             insert = "INSERT INTO message (member_id, content) VALUES (%s, %s)"
-            insertVal = (session["userID"], message)
-            cursor.execute(insert, insertVal)
+            insert_val = (session["userID"], message)
+            cursor.execute(insert, insert_val)
             db.commit()
             return redirect("/member")
         else:
