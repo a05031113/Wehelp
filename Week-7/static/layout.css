@@ -39,10 +39,10 @@
     display: flex;
     margin: 10px;
 }
-.search_result{
+.searchResult{
     display:flex;
 }
-.rename_result{
+.renameResult{
     display:flex;
 }
 .rename{

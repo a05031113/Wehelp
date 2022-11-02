@@ -58,7 +58,7 @@
         function search(){
             // get API's url
             let searchValue = document.getElementById("searchUsername").value;
-            url = "http://127.0.0.1:3000/api/member?username="+search_value;
+            url = "http://127.0.0.1:3000/api/member?username="+searchValue;
             // where to insert into HTML
             let searchDiv = document.querySelector(".searchResult");
             // clean 
@@ -67,7 +67,7 @@
             fetch(url).then(function(response){
                 return response.json();
             }).then(function(lis){
-                let data = lis['data'];
+                let data = lis["data"];
                 // appendChild into HTML
                 if (data === null){
                     const result = document.createElement("div");
@@ -78,13 +78,13 @@
                     const result = document.createElement("div");
                     const content = document.createTextNode(data["name"]+"("+data["username"]+")");
                     result.appendChild(content);
-                    searchDiv.appendChild(result)
+                    searchDiv.appendChild(result);
                 }
             })
         }
         function rename(){
             // send json to backend
-            let url = "http://127.0.0.1:3000/api/member"
+            let url = "http://127.0.0.1:3000/api/member";
             let rename = document.getElementById("rename").value;
             const data = {
                 "name": rename
@@ -96,7 +96,7 @@
                     "Content-type": "application/json"
                 }
             }).catch(function(error){
-                console.log("something wrong")
+                console.log("something wrong");
             })
             // show "更新完成"
             let renameDiv = document.querySelector(".renameResult");
