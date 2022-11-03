@@ -80,6 +80,8 @@
                     result.appendChild(content);
                     searchDiv.appendChild(result);
                 }
+            }).catch(function(error){
+                console.log("something wrong")
             })
         }
         function rename(){
@@ -95,6 +97,10 @@
                 headers: {
                     "Content-type": "application/json"
                 }
+            }).then(function(response){
+                response.json().then(function(data){
+                    console.log(data);
+                })
             }).catch(function(error){
                 console.log("something wrong");
             })

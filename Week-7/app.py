@@ -9,31 +9,37 @@ import mysql.connector as connector
 from werkzeug.security import check_password_hash, generate_password_hash
 from mySQL import p
 
+
 def connection():
     db = connector.connect(
-        pool_name = "mypool",
-        pool_size = 5,
-        host = "127.0.0.1",
-        user = "root",
-        password = p(),
-        database = "website"
+        pool_name="mypool",
+        pool_size=5,
+        host="127.0.0.1",
+        user="root",
+        password=p(),
+        database="website"
     )
     return db
 
+
 app = Flask(__name__)
-app.secret_key="secret"
+app.secret_key = "secret"
 
 # index page
+
+
 @app.route("/")
-def index(): 
+def index():
     # if already login, return to /member
     if session.get("userID"):
         return redirect("/member")
-    # if not login, go to index 
+    # if not login, go to index
     else:
         return render_template("index.html")
 
 # signup page
+
+
 @app.route("/signup", methods=["POST"])
 def signup():
     name = request.form.get("name")
@@ -56,7 +62,7 @@ def signup():
         cursor.execute(check_user, user)
         is_password = cursor.fetchone()
         if is_password:
-            return redirect("error?message=帳號已經被註冊")        
+            return redirect("error?message=帳號已經被註冊")
         else:
             # insert data into database
             insert = "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)"
@@ -78,9 +84,11 @@ def signup():
         db.close()
 
 # check signin data
+
+
 @app.route("/signin", methods=["POST"])
 def signin():
-    # user data 
+    # user data
     username = request.form.get("username")
     password = request.form.get("password")
     # if username or password are blank
@@ -96,7 +104,7 @@ def signin():
             cursor.execute(check, check_val)
             for member in cursor:
                 if check_password_hash(member[0], password):
-                    session["userID"]=member[1]
+                    session["userID"] = member[1]
                     return redirect("/member")
             # if wrong return to error
             return redirect("/error?message=帳號或密碼輸入錯誤")
@@ -107,14 +115,18 @@ def signin():
         db.close()
 
 # signout and clean session and return to index
+
+
 @app.route("/signout")
 def signout():
     session.clear()
     return redirect("/")
 
 # member page
+
+
 @app.route("/member")
-def member(): 
+def member():
     # if already login
     try:
         if session.get("userID"):
@@ -145,6 +157,7 @@ def member():
         cursor.close()
         db.close()
 
+
 @app.route("/api/member", methods=["GET", "PATCH"])
 def api():
     # if already login
@@ -154,14 +167,17 @@ def api():
             cursor = db.cursor()
             # if request is PATCH
             if request.method == "PATCH":
-                # get json
-                rename = request.get_json()
-                # update name
-                change = "UPDATE member SET name = %s WHERE id = %s"
-                change_val = (rename["name"], session["userID"])
-                cursor.execute(change, change_val)
-                db.commit()
-                return ""
+                try:
+                    # get json
+                    rename = request.get_json()
+                    # update name
+                    change = "UPDATE member SET name = %s WHERE id = %s"
+                    change_val = (rename["name"], session["userID"])
+                    cursor.execute(change, change_val)
+                    db.commit()
+                    return jsonify({"ok": True})
+                except:
+                    return jsonify({"error": True})
             # send api to frontend
             else:
                 username = request.args.get("username")
@@ -172,7 +188,7 @@ def api():
                 # if find username
                 if user_data:
                     data = {
-                        "data":{
+                        "data": {
                             "id": user_data[0],
                             "name": user_data[1],
                             "username": username
@@ -182,7 +198,7 @@ def api():
                 # if not in data
                 else:
                     data = {
-                        "data":None
+                        "data": None
                     }
                     return jsonify(data)
         # if not login, go back to "/"
@@ -218,12 +234,15 @@ def message():
         db.close()
 
 # if something wrong
+
+
 @app.route("/error")
 def error():
     # show error message
     message = request.args.get("message")
     return render_template("error.html", message=message)
 
-if __name__=="__main__":
-    app.secret_key="secret"
+
+if __name__ == "__main__":
+    app.secret_key = "secret"
     app.run(port=3000, debug=True)
