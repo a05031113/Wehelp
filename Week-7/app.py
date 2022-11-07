@@ -92,10 +92,10 @@ def signin():
     username = request.form.get("username")
     password = request.form.get("password")
     # if username or password are blank
-    try:
-        if not username or not password:
-            return redirect("/error?message=請輸入帳號、密碼")
-        else:
+    if not username or not password:
+        return redirect("/error?message=請輸入帳號、密碼")
+    else:
+        try:
             db = connection()
             cursor = db.cursor()
             # check username and password
@@ -108,11 +108,11 @@ def signin():
                     return redirect("/member")
             # if wrong return to error
             return redirect("/error?message=帳號或密碼輸入錯誤")
-    except:
-        print("something wrong")
-    finally:
-        cursor.close()
-        db.close()
+        except:
+            print("something wrong")
+        finally:
+            cursor.close()
+            db.close()
 
 # signout and clean session and return to index
 
@@ -128,8 +128,8 @@ def signout():
 @app.route("/member")
 def member():
     # if already login
-    try:
-        if session.get("userID"):
+    if session.get("userID"):
+        try:
             db = connection()
             cursor = db.cursor()
             # show name on /member
@@ -148,38 +148,43 @@ def member():
             for row in cursor:
                 rows.append([row[0], row[1]])
             return render_template("member.html", name=name, rows=rows)
-        # if not login yet, need to login first
-        else:
-            return redirect("/")
-    except:
-        print("something wrong")
-    finally:
-        cursor.close()
-        db.close()
+        except:
+            print("something wrong")
+        finally:
+            cursor.close()
+            db.close()
+    # if not login yet, need to login first
+    else:
+        return redirect("/")
 
 
 @app.route("/api/member", methods=["GET", "PATCH"])
 def api():
     # if already login
-    try:
-        if session.get("userID"):
+    if session.get("userID"):
+        # if request is PATCH
+        if request.method == "PATCH":
             db = connection()
             cursor = db.cursor()
-            # if request is PATCH
-            if request.method == "PATCH":
-                try:
-                    # get json
-                    rename = request.get_json()
-                    # update name
-                    change = "UPDATE member SET name = %s WHERE id = %s"
-                    change_val = (rename["name"], session["userID"])
-                    cursor.execute(change, change_val)
-                    db.commit()
-                    return jsonify({"ok": True})
-                except:
-                    return jsonify({"error": True})
-            # send api to frontend
-            else:
+            try:
+                # get json
+                rename = request.get_json()
+                # update name
+                change = "UPDATE member SET name = %s WHERE id = %s"
+                change_val = (rename["name"], session["userID"])
+                cursor.execute(change, change_val)
+                db.commit()
+                return jsonify({"ok": True})
+            except:
+                return jsonify({"error": True})
+            finally:
+                cursor.close()
+                db.close()
+        # send api to frontend
+        else:
+            db = connection()
+            cursor = db.cursor()
+            try:
                 username = request.args.get("username")
                 check_user = "SELECT id, name FROM member WHERE username = %s"
                 check_val = (username, )
@@ -201,20 +206,20 @@ def api():
                         "data": None
                     }
                     return jsonify(data)
+            except:
+                print("something error")
+            finally:
+                cursor.close()
+                db.close()
         # if not login, go back to "/"
-        else:
-            return redirect("/")
-    except:
-        print("something wrong")
-    finally:
-        cursor.close()
-        db.close()
+    else:
+        return jsonify({"error": True})
 
 
 @app.route("/message", methods=["POST"])
 def message():
-    try:
-        if session.get("userID"):
+    if session.get("userID"):
+        try:
             db = connection()
             cursor = db.cursor()
             # get message content
@@ -225,15 +230,13 @@ def message():
             cursor.execute(insert, insert_val)
             db.commit()
             return redirect("/member")
-        else:
-            return redirect("/")
-    except:
-        print("something wrong")
-    finally:
-        cursor.close()
-        db.close()
-
-# if something wrong
+        except:
+            print("something wrong")
+        finally:
+            cursor.close()
+            db.close()
+    else:
+        return redirect("/")
 
 
 @app.route("/error")
